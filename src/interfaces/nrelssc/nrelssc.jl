@@ -13,7 +13,11 @@ function ssc_version()
 end
 
 function ssc_build_info()
-    ccall((:ssc_build_info, sscdll), Cchar, ())
+    build_info = ccall((:ssc_build_info, sscdll), Cstring, ())    
+    if build_info == C_NULL
+        error("call ssc_build_info error.")
+    end
+    return unsafe_string(build_info)
 end
 
 end # module
